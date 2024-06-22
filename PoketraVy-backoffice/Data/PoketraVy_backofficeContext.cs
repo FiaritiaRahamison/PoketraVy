@@ -19,6 +19,9 @@ namespace PoketraVy_backoffice.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Utilisateur>().ToTable("utilisateur");
+            modelBuilder.Entity<Budget>().ToTable("budget");
         }
+
+        public DbSet<PoketraVy_backoffice.Models.Budget> Budgets { get; set; }
     }
 }
