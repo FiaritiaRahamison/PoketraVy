@@ -1,0 +1,55 @@
+﻿@page
+@model PoketraVy_backoffice.Pages.CategorieUtilisateurBudgets.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>CategorieUtilisateurBudget</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CategorieUtilisateurBudget.ID" />
+            <div class="form-group">
+                <label asp-for="CategorieUtilisateurBudget.IdUtilisateurBudget" class="control-label"></label>
+                <input asp-for="CategorieUtilisateurBudget.IdUtilisateurBudget" class="form-control" />
+                <span asp-validation-for="CategorieUtilisateurBudget.IdUtilisateurBudget" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategorieUtilisateurBudget.Designation" class="control-label"></label>
+                <input asp-for="CategorieUtilisateurBudget.Designation" class="form-control" />
+                <span asp-validation-for="CategorieUtilisateurBudget.Designation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategorieUtilisateurBudget.Categorie" class="control-label"></label>
+                <input asp-for="CategorieUtilisateurBudget.Categorie" class="form-control" />
+                <span asp-validation-for="CategorieUtilisateurBudget.Categorie" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategorieUtilisateurBudget.Montant" class="control-label"></label>
+                <input asp-for="CategorieUtilisateurBudget.Montant" class="form-control" />
+                <span asp-validation-for="CategorieUtilisateurBudget.Montant" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategorieUtilisateurBudget.Daty" class="control-label"></label>
+                <input asp-for="CategorieUtilisateurBudget.Daty" class="form-control" />
+                <span asp-validation-for="CategorieUtilisateurBudget.Daty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

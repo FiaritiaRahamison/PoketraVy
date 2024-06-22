@@ -21,10 +21,13 @@ namespace PoketraVy_backoffice.Data
             modelBuilder.Entity<Utilisateur>().ToTable("utilisateur");
             modelBuilder.Entity<Budget>().ToTable("budget");
             modelBuilder.Entity<UtilisateurBudget>().ToTable("utilisateurbudget");
+            modelBuilder.Entity<CategorieUtilisateurBudget>().ToTable("categorieutilisateurbudget");
         }
 
         public DbSet<PoketraVy_backoffice.Models.Budget> Budgets { get; set; }
 
         public DbSet<PoketraVy_backoffice.Models.UtilisateurBudget> UtilisateurBudgets { get; set; }
+
+        public DbSet<PoketraVy_backoffice.Models.CategorieUtilisateurBudget> CategorieUtilisateurBudget { get; set; }
     }
 }
