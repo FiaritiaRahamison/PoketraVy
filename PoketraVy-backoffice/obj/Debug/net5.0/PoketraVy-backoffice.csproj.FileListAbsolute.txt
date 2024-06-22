@@ -139,6 +139,11 @@ D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Ra
 D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\Privacy.cshtml.g.cs
 D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\Shared\_Layout.cshtml.g.cs
 D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\Shared\_ValidationScriptsPartial.cshtml.g.cs
+D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\UtilisateurBudgets\Create.cshtml.g.cs
+D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\UtilisateurBudgets\Delete.cshtml.g.cs
+D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\UtilisateurBudgets\Details.cshtml.g.cs
+D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\UtilisateurBudgets\Edit.cshtml.g.cs
+D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\UtilisateurBudgets\Index.cshtml.g.cs
 D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\Utilisateurs\Create.cshtml.g.cs
 D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\Utilisateurs\Delete.cshtml.g.cs
 D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\Utilisateurs\Details.cshtml.g.cs

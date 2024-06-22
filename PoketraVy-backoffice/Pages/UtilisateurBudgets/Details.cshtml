@@ -1,0 +1,43 @@
+﻿@page
+@model PoketraVy_backoffice.Pages.UtilisateurBudgets.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>UtilisateurBudget</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UtilisateurBudget.IdUtilisateur)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UtilisateurBudget.IdUtilisateur)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UtilisateurBudget.IdBudget)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UtilisateurBudget.IdBudget)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UtilisateurBudget.Montant)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UtilisateurBudget.Montant)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UtilisateurBudget.Remarque)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UtilisateurBudget.Remarque)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.UtilisateurBudget.ID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
