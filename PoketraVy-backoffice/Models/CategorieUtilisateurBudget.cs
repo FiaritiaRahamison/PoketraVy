@@ -19,5 +19,7 @@ namespace PoketraVy_backoffice.Models
         public DateTime Daty { get; set; }
 
         public UtilisateurBudget UtilisateurBudget { get; set; }
+        public ICollection<Mouvement> Mouvement { get; set; }
+
     }
 }

@@ -28,6 +28,8 @@ namespace PoketraVy_backoffice.Data
 
         public DbSet<PoketraVy_backoffice.Models.UtilisateurBudget> UtilisateurBudgets { get; set; }
 
-        public DbSet<PoketraVy_backoffice.Models.CategorieUtilisateurBudget> CategorieUtilisateurBudget { get; set; }
+        public DbSet<PoketraVy_backoffice.Models.CategorieUtilisateurBudget> CategorieUtilisateurBudgets { get; set; }
+
+        public DbSet<PoketraVy_backoffice.Models.Mouvement> Mouvement { get; set; }
     }
 }

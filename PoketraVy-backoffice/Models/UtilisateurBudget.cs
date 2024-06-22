@@ -18,5 +18,6 @@ namespace PoketraVy_backoffice.Models
 
         public Utilisateur Utilisateur{ get; set; }
         public Budget Budget { get; set; }
+
     }
 }

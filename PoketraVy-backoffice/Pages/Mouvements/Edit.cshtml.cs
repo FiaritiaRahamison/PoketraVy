@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using PoketraVy_backoffice.Data;
 using PoketraVy_backoffice.Models;
 
-namespace PoketraVy_backoffice.Pages.CategorieUtilisateurBudgets
+namespace PoketraVy_backoffice.Pages.Mouvements
 {
     public class EditModel : PageModel
     {
@@ -21,7 +21,7 @@ namespace PoketraVy_backoffice.Pages.CategorieUtilisateurBudgets
         }
 
         [BindProperty]
-        public CategorieUtilisateurBudget CategorieUtilisateurBudget { get; set; }
+        public Mouvement Mouvement { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,9 +30,9 @@ namespace PoketraVy_backoffice.Pages.CategorieUtilisateurBudgets
                 return NotFound();
             }
 
-            CategorieUtilisateurBudget = await _context.CategorieUtilisateurBudgets.FirstOrDefaultAsync(m => m.ID == id);
+            Mouvement = await _context.Mouvement.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (CategorieUtilisateurBudget == null)
+            if (Mouvement == null)
             {
                 return NotFound();
             }
@@ -48,7 +48,7 @@ namespace PoketraVy_backoffice.Pages.CategorieUtilisateurBudgets
                 return Page();
             }
 
-            _context.Attach(CategorieUtilisateurBudget).State = EntityState.Modified;
+            _context.Attach(Mouvement).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +56,7 @@ namespace PoketraVy_backoffice.Pages.CategorieUtilisateurBudgets
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CategorieUtilisateurBudgetExists(CategorieUtilisateurBudget.ID))
+                if (!MouvementExists(Mouvement.ID))
                 {
                     return NotFound();
                 }
@@ -69,9 +69,9 @@ namespace PoketraVy_backoffice.Pages.CategorieUtilisateurBudgets
             return RedirectToPage("./Index");
         }
 
-        private bool CategorieUtilisateurBudgetExists(int id)
+        private bool MouvementExists(int id)
         {
-            return _context.CategorieUtilisateurBudgets.Any(e => e.ID == id);
+            return _context.Mouvement.Any(e => e.ID == id);
         }
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using PoketraVy_backoffice.Data;
 using PoketraVy_backoffice.Models;
 
-namespace PoketraVy_backoffice.Pages.CategorieUtilisateurBudgets
+namespace PoketraVy_backoffice.Pages.Mouvements
 {
     public class DeleteModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace PoketraVy_backoffice.Pages.CategorieUtilisateurBudgets
         }
 
         [BindProperty]
-        public CategorieUtilisateurBudget CategorieUtilisateurBudget { get; set; }
+        public Mouvement Mouvement { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,9 +29,9 @@ namespace PoketraVy_backoffice.Pages.CategorieUtilisateurBudgets
                 return NotFound();
             }
 
-            CategorieUtilisateurBudget = await _context.CategorieUtilisateurBudgets.FirstOrDefaultAsync(m => m.ID == id);
+            Mouvement = await _context.Mouvement.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (CategorieUtilisateurBudget == null)
+            if (Mouvement == null)
             {
                 return NotFound();
             }
@@ -45,11 +45,11 @@ namespace PoketraVy_backoffice.Pages.CategorieUtilisateurBudgets
                 return NotFound();
             }
 
-            CategorieUtilisateurBudget = await _context.CategorieUtilisateurBudgets.FindAsync(id);
+            Mouvement = await _context.Mouvement.FindAsync(id);
 
-            if (CategorieUtilisateurBudget != null)
+            if (Mouvement != null)
             {
-                _context.CategorieUtilisateurBudgets.Remove(CategorieUtilisateurBudget);
+                _context.Mouvement.Remove(Mouvement);
                 await _context.SaveChangesAsync();
             }
 

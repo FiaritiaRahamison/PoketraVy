@@ -159,3 +159,14 @@ D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Po
 D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\ref\PoketraVy-backoffice.dll
 D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\PoketraVy-backoffice.pdb
 D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\PoketraVy-backoffice.genruntimeconfig.cache
+D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\PoketraVy-backoffice.csproj.AssemblyReference.cache
+D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\CategorieUtilisateurBudgets\Create.cshtml.g.cs
+D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\CategorieUtilisateurBudgets\Delete.cshtml.g.cs
+D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\CategorieUtilisateurBudgets\Details.cshtml.g.cs
+D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\CategorieUtilisateurBudgets\Edit.cshtml.g.cs
+D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\CategorieUtilisateurBudgets\Index.cshtml.g.cs
+D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\Mouvements\Create.cshtml.g.cs
+D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\Mouvements\Delete.cshtml.g.cs
+D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\Mouvements\Details.cshtml.g.cs
+D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\Mouvements\Edit.cshtml.g.cs
+D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\Mouvements\Index.cshtml.g.cs

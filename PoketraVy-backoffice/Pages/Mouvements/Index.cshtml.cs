@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using PoketraVy_backoffice.Data;
 using PoketraVy_backoffice.Models;
 
-namespace PoketraVy_backoffice.Pages.CategorieUtilisateurBudgets
+namespace PoketraVy_backoffice.Pages.Mouvements
 {
     public class IndexModel : PageModel
     {
@@ -19,11 +19,11 @@ namespace PoketraVy_backoffice.Pages.CategorieUtilisateurBudgets
             _context = context;
         }
 
-        public IList<CategorieUtilisateurBudget> CategorieUtilisateurBudget { get;set; }
+        public IList<Mouvement> Mouvement { get;set; }
 
         public async Task OnGetAsync()
         {
-            CategorieUtilisateurBudget = await _context.CategorieUtilisateurBudgets.ToListAsync();
+            Mouvement = await _context.Mouvement.ToListAsync();
         }
     }
 }

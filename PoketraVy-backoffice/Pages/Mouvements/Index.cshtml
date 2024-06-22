@@ -1,0 +1,54 @@
+﻿@page
+@model PoketraVy_backoffice.Pages.Mouvements.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Mouvement[0].IdCategorieUtilisateurBudget)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mouvement[0].Designation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mouvement[0].montant)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mouvement[0].daty)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Mouvement) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCategorieUtilisateurBudget)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Designation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.montant)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.daty)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

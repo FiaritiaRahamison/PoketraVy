@@ -13,5 +13,7 @@ namespace PoketraVy_backoffice.Models
         public DateTime DatyFinPrevisionnel { get; set; }
         public bool Etat { get; set; }
         public string Remarque { get; set; }
+
+        public ICollection<UtilisateurBudget> UtilisateurBudget { get; set; }
     }
 }

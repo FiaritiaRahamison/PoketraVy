@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using PoketraVy_backoffice.Data;
 using PoketraVy_backoffice.Models;
 
-namespace PoketraVy_backoffice.Pages.CategorieUtilisateurBudgets
+namespace PoketraVy_backoffice.Pages.Mouvements
 {
     public class CreateModel : PageModel
     {
@@ -25,7 +25,7 @@ namespace PoketraVy_backoffice.Pages.CategorieUtilisateurBudgets
         }
 
         [BindProperty]
-        public CategorieUtilisateurBudget CategorieUtilisateurBudget { get; set; }
+        public Mouvement Mouvement { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
@@ -35,7 +35,7 @@ namespace PoketraVy_backoffice.Pages.CategorieUtilisateurBudgets
                 return Page();
             }
 
-            _context.CategorieUtilisateurBudgets.Add(CategorieUtilisateurBudget);
+            _context.Mouvement.Add(Mouvement);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
