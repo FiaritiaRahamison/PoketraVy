@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
 
 namespace PoketraVy_backoffice.Pages
 {
@@ -40,10 +43,16 @@ namespace PoketraVy_backoffice.Pages
 
                 if (user != null)
                 {
-                    // Authentification réussie
-                    HttpContext.Session.SetInt32("UserId", user.ID);
-                    HttpContext.Session.SetString("Username", user.Username);
-                    HttpContext.Session.SetString("UserRole", user.Role.ToString());
+                    var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.NameIdentifier, user.ID.ToString()),
+                new Claim(ClaimTypes.Role, user.Role.ToString())
+            };
+
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
                     return RedirectToPage("/Utilisateurs/Index");
                 }
@@ -56,13 +65,13 @@ namespace PoketraVy_backoffice.Pages
             return Page();
         }
 
-        public IActionResult OnPostLogout()
+        public async Task<IActionResult> OnPostLogoutAsync()
         {
-            // Clear the session
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Clear();
-            Response.Cookies.Delete(".AspNetCore.Session");
-            // Redirect to the home page
+
             return RedirectToPage("/Index");
         }
+
     }
 }
