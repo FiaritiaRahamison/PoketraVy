@@ -100,6 +100,7 @@ namespace PoketraVy_backoffice.Pages.Utilisateurs
 
         private async Task ProcessExcelFile(IFormFile file)
         {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (var stream = new MemoryStream())
             {
                 await file.CopyToAsync(stream);
@@ -115,7 +116,7 @@ namespace PoketraVy_backoffice.Pages.Utilisateurs
                         var utilisateur = new Utilisateur
                         {
                             Username = worksheet.Cells[row, 1].Text,
-                            Password = worksheet.Cells[row, 2].Text,
+                            Password = null,
                             Role = role
                         };
 
