@@ -39,31 +39,46 @@ namespace PoketraVy_backoffice.Pages
         {
             if (ModelState.IsValid)
             {
-                var user = _context.Utilisateurs.SingleOrDefault(u => u.Username == Input.Username && u.Password == Input.Password);
+                var user = _context.Utilisateurs.SingleOrDefault(u => u.Username == Input.Username);
 
                 if (user != null)
                 {
-                    var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.NameIdentifier, user.ID.ToString()),
-                new Claim(ClaimTypes.Role, user.Role.ToString())
-            };
+                    if (string.IsNullOrEmpty(user.Password))
+                    {
+                        // Rediriger vers une page de création de mot de passe
+                        HttpContext.Session.SetInt32("UserId", user.ID);
+                        return RedirectToPage("/Authentication/CreatePassword");
+                    }
+                    else if (user.Password == Input.Password)
+                    {
+                        // Authentification réussie
+                        var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Name, user.Username),
+                            new Claim(ClaimTypes.NameIdentifier, user.ID.ToString()),
+                            new Claim(ClaimTypes.Role, user.Role.ToString())
+                        };
 
-                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
-                    return RedirectToPage("/Utilisateurs/Index");
+                        return RedirectToPage("/Utilisateurs/Index");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Nom d'utilisateur ou mot de passe incorrect.");
+                    }
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Nom d'utilisateur ou mot de passe incorrect.");
+                    ModelState.AddModelError(string.Empty, "Nom d'utilisateur incorrect.");
                 }
             }
 
             return Page();
         }
+
 
         public async Task<IActionResult> OnPostLogoutAsync()
         {

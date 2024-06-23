@@ -170,3 +170,4 @@ D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Ra
 D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\Mouvements\Details.cshtml.g.cs
 D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\Mouvements\Edit.cshtml.g.cs
 D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\Mouvements\Index.cshtml.g.cs
+D:\IT-U\Master\M2\C#.NET Core\PoketraVy\PoketraVy-backoffice\obj\Debug\net5.0\Razor\Pages\Authentication\CreatePassword.cshtml.g.cs
