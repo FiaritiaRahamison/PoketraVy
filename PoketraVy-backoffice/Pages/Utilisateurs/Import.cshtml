@@ -1,0 +1,28 @@
+﻿@page
+@model PoketraVy_backoffice.Pages.Utilisateurs.ImportModel
+@{
+    ViewData["Title"] = "Import d'utilisateurs";
+}
+
+<h2>Télécharger un fichier CSV/Excel</h2>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="file">Choisir un fichier CSV ou Excel</label>
+        <input type="file" name="UploadedFile" id="file" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Télécharger</button>
+</form>
+
+@if (Model.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @Model.ErrorMessage
+    </div>
+}
+@if (Model.SuccessMessage != null)
+{
+    <div class="alert alert-success">
+        @Model.SuccessMessage
+    </div>
+}
