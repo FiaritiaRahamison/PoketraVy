@@ -482,3 +482,5 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+/PoketraVy-frontoffice/obj
+/PoketraVy-backoffice/obj
