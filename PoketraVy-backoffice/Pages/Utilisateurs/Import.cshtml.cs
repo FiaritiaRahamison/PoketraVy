@@ -86,7 +86,7 @@ namespace PoketraVy_backoffice.Pages.Utilisateurs
                     var utilisateur = new Utilisateur
                     {
                         Username = csv.GetField("Username"),
-                        Password = csv.GetField("Password"),
+                        Password = null,
                         Role = csv.GetField("Role").ToLower() == "true" || csv.GetField("Role").ToLower() == "yes" || csv.GetField("Role") == "1"
                     };
                     records.Add(utilisateur);
