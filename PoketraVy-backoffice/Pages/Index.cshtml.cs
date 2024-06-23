@@ -55,5 +55,14 @@ namespace PoketraVy_backoffice.Pages
 
             return Page();
         }
+
+        public IActionResult OnPostLogout()
+        {
+            // Clear the session
+            HttpContext.Session.Clear();
+            Response.Cookies.Delete(".AspNetCore.Session");
+            // Redirect to the home page
+            return RedirectToPage("/Index");
+        }
     }
 }
