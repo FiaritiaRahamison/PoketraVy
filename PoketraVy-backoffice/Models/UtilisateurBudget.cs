@@ -12,8 +12,7 @@ namespace PoketraVy_backoffice.Models
         public int ID { get; set; }
         public int IdUtilisateur { get; set; }
         public int IdBudget { get; set; }
-
-        public double? Montant { get; set; }
+        public double Montant { get; set; }
         public string Remarque { get; set; }
 
         public Utilisateur Utilisateur{ get; set; }
