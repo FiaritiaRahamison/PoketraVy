@@ -165,5 +165,38 @@ namespace PoketraVy_frontoffice.Data
                 throw;
             }
         }
+
+        // Méthode pour obtenir les CategorieUtilisateurBudget par UtilisateurBudget ID
+        public IEnumerable<Mouvement> GetByIdUser(int IdUser)
+        {
+            var mouvements = new List<Mouvement>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                String query = @"select m.* from mouvement m  join categorieutilisateurbudget  cub 
+                      on m.IdCategorieUtilisateurBudget = cub.ID
+                      join utilisateurbudget ub on ub.ID = cub.IdUtilisateurBudget
+                      where ub.IdUtilisateur = @IdUser";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@IdUser", IdUser);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    mouvements.Add(new Mouvement
+                    {
+                        ID = (int)reader["ID"],
+                        IdCategorieUtilisateurBudget = (int)reader["IdCategorieUtilisateurBudget"],
+                        Designation = reader["Designation"].ToString(),
+                        montant = (double)reader["montant"],
+                        daty = (DateTime)reader["daty"]
+                    });
+                }
+            }
+
+            return mouvements;
+        }
     }
 }

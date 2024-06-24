@@ -9,5 +9,6 @@ namespace PoketraVy_frontoffice.Models
     {
         public List<UtilisateurBudget> UtilisateurBudgets { get; set; }
         public Dictionary<int, List<CategorieUtilisateurBudget>> CategorieUtilisateurBudgets { get; set; }
+        public double depenses { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using PoketraVy_frontoffice.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace PoketraVy_frontoffice.Controllers
@@ -15,12 +16,17 @@ namespace PoketraVy_frontoffice.Controllers
         private readonly UtilisateurRepository _utilisateurRepository;
         private readonly UtilisateurBudgetRepository _utilisateurBudgetRepository;
         private readonly CategorieUtilisateurBudgetRepository _categorieUtilisateurBudgetRepository;
+        private readonly MouvementRepository _mouvementRepository;
 
-        public UtilisateurController(UtilisateurRepository utilisateurRepository, UtilisateurBudgetRepository utilisateurBudgetRepository, CategorieUtilisateurBudgetRepository categorieUtilisateurBudgetRepository)
+        public UtilisateurController(UtilisateurRepository utilisateurRepository,
+            UtilisateurBudgetRepository utilisateurBudgetRepository,
+            CategorieUtilisateurBudgetRepository categorieUtilisateurBudgetRepository,
+            MouvementRepository mouvementRepository)
         {
             _utilisateurRepository = utilisateurRepository;
             _utilisateurBudgetRepository = utilisateurBudgetRepository;
             _categorieUtilisateurBudgetRepository = categorieUtilisateurBudgetRepository;
+            _mouvementRepository = mouvementRepository;
         }
 
         // GET: UtilisateurController
@@ -126,11 +132,15 @@ namespace PoketraVy_frontoffice.Controllers
 
         public IActionResult UserBudgets()
         {
-            // Remplacer par l'ID utilisateur connecté
-            int userId = 1;
+            int userId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
             var utilisateurBudgets = _utilisateurBudgetRepository.GetUtilisateurBudgetsByUserId(userId);
             var categorieUtilisateurBudgets = new Dictionary<int, List<CategorieUtilisateurBudget>>();
+            var depensesListe = _mouvementRepository.GetByIdUser(userId);
+
+            var depenses = 0.0;
+
+
 
             foreach (var budget in utilisateurBudgets)
             {
@@ -138,10 +148,16 @@ namespace PoketraVy_frontoffice.Controllers
                 categorieUtilisateurBudgets[budget.ID] = categories.ToList();
             }
 
+            foreach (var depense in depensesListe)
+            {
+                depenses += depense.montant;
+            }
+
             var viewModel = new UserBudgetsViewModel
             {
                 UtilisateurBudgets = utilisateurBudgets.ToList(),
-                CategorieUtilisateurBudgets = categorieUtilisateurBudgets
+                CategorieUtilisateurBudgets = categorieUtilisateurBudgets,
+                depenses = depenses
             };
 
             return View(viewModel);

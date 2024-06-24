@@ -6,48 +6,48 @@
 
 <h2>User Budgets</h2>
 
-<canvas id="pieChart" width="50" height="500"></canvas>
-
-@if (Model.UtilisateurBudgets != null && Model.UtilisateurBudgets.Any())
-{
-<table class="table">
-    <thead>
-        <tr>
-            <th>Budget ID</th>
-            <th>Montant</th>
-            <th>Remarque</th>
-            <th>Categorie Budgets</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var budget in Model.UtilisateurBudgets)
+<div class="row" style="justify-content: center;">
+    <div class="col-md-4">
+        @if (Model.UtilisateurBudgets != null && Model.UtilisateurBudgets.Any())
         {
-        <tr>
-            <td>@budget.IdBudget</td>
-            <td>@budget.Montant</td>
-            <td>@budget.Remarque</td>
-            <td>
-                <ul>
-                    @if (Model.CategorieUtilisateurBudgets.ContainsKey(budget.ID))
-                    {
-                    @foreach (var catBudget in Model.CategorieUtilisateurBudgets[budget.ID])
-                    {
-                    <li>@catBudget.Categorie.Value - @catBudget.Montant</li>
+            <div class="card mb-3">
+                <div class="card-header">
+                    Montant de départ
+                </div>
+                <div class="card-body">
+                    @{
+                        double? totalMontant = 0.0;
+                        foreach (var budget in Model.UtilisateurBudgets)
+                        {
+                            totalMontant += @budget.Montant;
+                        }
                     }
-                    }
-                </ul>
-            </td>
-        </tr>
+                    <h5><b>@totalMontant</b></h5>
+                </div>
+            </div>
+         }
+        else
+        {
+            <p>No budgets found.</p>
         }
-    </tbody>
-</table>
-}
-else
-{
-<p>No budgets found.</p>
-}
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-header">
+                Dépenses
+            </div>
+            <div class="card-body">
+                <h4><b>@Model.depenses</b></h4>
+            </div>
+        </div>
+        
+    </div>
+</div>
 
-<button id="modifyButton" class="btn btn-primary">Modifier</button>
+<div style="justify-content: center;">
+    <canvas id="pieChart" width="400" height="400"></canvas>
+    <button id="modifyButton" class="btn btn-primary">Modifier</button>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
@@ -63,39 +63,39 @@ else
         };
 
         @foreach(var budget in Model.UtilisateurBudgets)
-    {
-        @if (Model.CategorieUtilisateurBudgets.ContainsKey(budget.ID)) {
-            @foreach(var catBudget in Model.CategorieUtilisateurBudgets[budget.ID])
-            {
-                <text>
-                    data.labels.push('@catBudget.Categorie.Value');
-                    data.datasets[0].data.push('@catBudget.Montant');
-                    data.datasets[0].backgroundColor.push(generateRandomColor());
+        {
+            @if (Model.CategorieUtilisateurBudgets.ContainsKey(budget.ID)) {
+                @foreach(var catBudget in Model.CategorieUtilisateurBudgets[budget.ID])
+                {
+                    <text>
+                        data.labels.push('@catBudget.Categorie.Value');
+                        data.datasets[0].data.push('@catBudget.Montant');
+                        data.datasets[0].backgroundColor.push(generateRandomColor());
                     </text>
+                }
             }
         }
-    }
 
-    var pieChart = new Chart(ctx, {
-        type: 'pie',
-        data: data,
-        options: {
-            responsive: false,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function (tooltipItem) {
-                            return tooltipItem.label + ': ' + tooltipItem.raw;
+        var pieChart = new Chart(ctx, {
+            type: 'pie',
+            data: data,
+            options: {
+                responsive: false,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw;
+                            }
                         }
                     }
                 }
             }
-        }
-    });
+        });
     });
 
     function generateRandomColor() {
