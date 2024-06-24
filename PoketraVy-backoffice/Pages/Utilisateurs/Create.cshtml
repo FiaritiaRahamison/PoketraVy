@@ -4,8 +4,13 @@
 @{
     ViewData["Title"] = "Create";
 }
-
-<h1>Create</h1>
+@if (!User.Identity.IsAuthenticated)
+{
+    <script>
+        window.location.href = '/Index';
+    </script>
+}
+<h1>Creation</h1>
 
 <h4>Utilisateur</h4>
 <hr />

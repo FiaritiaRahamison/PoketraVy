@@ -8,5 +8,8 @@ namespace PoketraVy_backoffice.services
     {
         Task<Utilisateur> GetUtilisateur(int id);
         Task<List<Utilisateur>> GetUtilisateurs();
+        Task<List<Utilisateur>> GetUtilisateursWithPaginationAsync(int pageNumber, int pageSize);
+        public Task<int> GetUtilisateursCountAsync();
+
     }
 }

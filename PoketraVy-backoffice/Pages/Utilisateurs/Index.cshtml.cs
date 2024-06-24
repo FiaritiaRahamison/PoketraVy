@@ -20,11 +20,19 @@ namespace PoketraVy_backoffice.Pages.Utilisateurs
             _service = service;
         }
 
-        public IList<Utilisateur> Utilisateur { get;set; }
+        public List<Utilisateur> Utilisateurs { get; private set; }
+        public int TotalPages { get; private set; }
+        public int CurrentPage { get; private set; }
 
-        public async Task OnGetAsync()
+        public int PageSize => 3;
+
+        public async Task OnGetAsync(int pageNumber = 1, int pageSize = 3)
         {
-            Utilisateur = await _service.GetUtilisateurs();
+            var totalCount = await _service.GetUtilisateursCountAsync();
+            TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+            CurrentPage = pageNumber;
+
+            Utilisateurs = await _service.GetUtilisateursWithPaginationAsync(pageNumber, pageSize);
         }
     }
 }
