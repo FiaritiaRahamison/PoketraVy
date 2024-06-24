@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PoketraVy_backoffice.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using PoketraVy_backoffice.Repositories;
+using PoketraVy_backoffice.services;
 
 namespace PoketraVy_backoffice
 {
@@ -30,6 +32,11 @@ namespace PoketraVy_backoffice
 
             services.AddDbContext<PoketraVy_backofficeContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("PoketraVy_backofficeContext")));
+
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IBudgetRepository, BudgetRepository>();
+            services.AddScoped<IUtilisateurService, UtilisateurService>();
+            services.AddScoped<IBudgetService, BudgetService>();
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 

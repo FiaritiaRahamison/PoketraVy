@@ -7,23 +7,24 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PoketraVy_backoffice.Data;
 using PoketraVy_backoffice.Models;
+using PoketraVy_backoffice.services;
 
 namespace PoketraVy_backoffice.Pages.Utilisateurs
 {
     public class IndexModel : PageModel
     {
-        private readonly PoketraVy_backoffice.Data.PoketraVy_backofficeContext _context;
+        private readonly IUtilisateurService _service;
 
-        public IndexModel(PoketraVy_backoffice.Data.PoketraVy_backofficeContext context)
+        public IndexModel(IUtilisateurService service)
         {
-            _context = context;
+            _service = service;
         }
 
         public IList<Utilisateur> Utilisateur { get;set; }
 
         public async Task OnGetAsync()
         {
-            Utilisateur = await _context.Utilisateurs.ToListAsync();
+            Utilisateur = await _service.GetUtilisateurs();
         }
     }
 }

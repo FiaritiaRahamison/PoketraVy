@@ -63,7 +63,7 @@ namespace PoketraVy_backoffice.Pages
 
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
-                        return RedirectToPage("/Utilisateurs/Index");
+                        return RedirectToPage("/Budgets/Index");
                     }
                     else
                     {

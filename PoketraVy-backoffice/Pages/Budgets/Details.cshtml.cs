@@ -7,19 +7,24 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PoketraVy_backoffice.Data;
 using PoketraVy_backoffice.Models;
+using PoketraVy_backoffice.services;
 
 namespace PoketraVy_backoffice.Pages.Budgets
 {
     public class DetailsModel : PageModel
     {
-        private readonly PoketraVy_backoffice.Data.PoketraVy_backofficeContext _context;
-
-        public DetailsModel(PoketraVy_backoffice.Data.PoketraVy_backofficeContext context)
-        {
-            _context = context;
-        }
+        private readonly IBudgetService _service;
+        
+        [BindProperty]
+        public List<UtilisateurBudget> UtilisateurBudgets { get; set; }
 
         public Budget Budget { get; set; }
+
+
+        public DetailsModel(IBudgetService service)
+        {
+            _service = service;
+        }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -27,13 +32,16 @@ namespace PoketraVy_backoffice.Pages.Budgets
             {
                 return NotFound();
             }
-
-            Budget = await _context.Budgets.FirstOrDefaultAsync(m => m.ID == id);
-
+            
+            Budget = await _service.GetBudget((int)id);
             if (Budget == null)
             {
                 return NotFound();
             }
+
+            // Check if UtilisateurBudget is null before converting to List
+            UtilisateurBudgets = Budget.UtilisateurBudget?.ToList() ?? new List<UtilisateurBudget>();
+
             return Page();
         }
     }
