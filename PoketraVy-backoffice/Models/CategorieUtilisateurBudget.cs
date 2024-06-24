@@ -14,7 +14,7 @@ namespace PoketraVy_backoffice.Models
         public int ID { get; set; }
         public int IdUtilisateurBudget { get; set; }
         public string Designation { get; set; }
-        public Categorie? Categorie { get; set; }
+        public Categorie Categorie { get; set; }
         public double Montant { get; set; }
         public DateTime Daty { get; set; }
 

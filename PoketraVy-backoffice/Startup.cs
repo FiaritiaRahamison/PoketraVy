@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PoketraVy_backoffice.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace PoketraVy_backoffice
 {
@@ -31,6 +32,20 @@ namespace PoketraVy_backoffice
                     options.UseSqlServer(Configuration.GetConnectionString("PoketraVy_backofficeContext")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            // Add session services
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30); // Set session timeout
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Index"; // La page de connexion
+                    });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,15 +65,16 @@ namespace PoketraVy_backoffice
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
+            app.UseSession();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
             });
+
         }
     }
 }
