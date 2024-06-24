@@ -105,5 +105,41 @@ namespace PoketraVy_frontoffice.Data
                 command.ExecuteNonQuery();
             }
         }
+
+        public Utilisateur GetByUsernameAndPassword(string username, string password)
+        {
+            Utilisateur utilisateur = null;
+
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    var command = new SqlCommand("SELECT * FROM utilisateur WHERE Username = @Username AND Password = @Password", connection);
+                    command.Parameters.AddWithValue("@Username", username);
+                    command.Parameters.AddWithValue("@Password", password);
+                    connection.Open();
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            utilisateur = new Utilisateur
+                            {
+                                ID = (int)reader["ID"],
+                                Username = reader["Username"].ToString(),
+                                Password = reader["Password"].ToString(),
+                                Role = (bool)reader["Role"]
+                            };
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"SQL Error: {ex.Message}");
+                throw;
+            }
+
+            return utilisateur;
+        }
     }
 }

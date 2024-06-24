@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,6 +26,14 @@ namespace PoketraVy_frontoffice
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.LoginPath = "/Authentication/Login";
+                options.LogoutPath = "/Authentication/Logout";
+            });
+
             services.AddSingleton(new UtilisateurRepository(Configuration.GetConnectionString("PoketraVy_frontofficeContext")));
             services.AddSingleton(new BudgetRepository(Configuration.GetConnectionString("PoketraVy_frontofficeContext")));
             services.AddSingleton(new UtilisateurBudgetRepository(Configuration.GetConnectionString("PoketraVy_frontofficeContext")));
@@ -49,14 +58,14 @@ namespace PoketraVy_frontoffice
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Authentication}/{action=Index}/{id?}");
             });
         }
     }
