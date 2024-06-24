@@ -1,4 +1,4 @@
-﻿@model PoketraVy_frontoffice.Models.Mouvement
+﻿@model PoketraVy_frontoffice.Models.MouvementCreationViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -13,24 +13,39 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="IdCategorieUtilisateurBudget" class="control-label"></label>
-                <input asp-for="IdCategorieUtilisateurBudget" class="form-control" />
-                <span asp-validation-for="IdCategorieUtilisateurBudget" class="text-danger"></span>
+                <label asp-for="Mouvement.IdCategorieUtilisateurBudget" class="control-label"></label>
+                <select asp-for="Mouvement.IdCategorieUtilisateurBudget" class="form-control">
+                    @foreach (var category in Model.Categories)
+                    {
+                    <option value="@category">@category</option>
+                    }
+                </select>
+                <span asp-validation-for="Mouvement.IdCategorieUtilisateurBudget" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Designation" class="control-label"></label>
-                <input asp-for="Designation" class="form-control" />
-                <span asp-validation-for="Designation" class="text-danger"></span>
+                <label asp-for="Mouvement.Designation" class="control-label"></label>
+                <input asp-for="Mouvement.Designation" class="form-control" />
+                <span asp-validation-for="Mouvement.Designation" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="montant" class="control-label"></label>
-                <input asp-for="montant" class="form-control" />
-                <span asp-validation-for="montant" class="text-danger"></span>
+                <label asp-for="Mouvement.montant" class="control-label"></label>
+                <input asp-for="Mouvement.montant" class="form-control" />
+                <span asp-validation-for="Mouvement.montant" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="daty" class="control-label"></label>
-                <input asp-for="daty" class="form-control" />
-                <span asp-validation-for="daty" class="text-danger"></span>
+                <label asp-for="Mouvement.daty" class="control-label"></label>
+                <input asp-for="Mouvement.daty" class="form-control" />
+                <span asp-validation-for="Mouvement.daty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mouvement" class="control-label"></label>
+                <select asp-for="IdBudget" class="form-control">
+                    @foreach (var budget in Model.ActiveBudgets)
+                    {
+                    <option value="@budget.ID">@budget.Remarque</option>
+                    }
+                </select>
+                <span asp-validation-for="IdBudget" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

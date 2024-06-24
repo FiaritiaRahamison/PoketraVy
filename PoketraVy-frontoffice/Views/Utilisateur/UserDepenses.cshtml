@@ -44,7 +44,7 @@
 
     <div>
         <li class="nav-item">
-            <form id="logoutForm" asp-controller="Mouvement" asp-action="Create" method="post" class="form-inline">
+            <form id="addMouvement" asp-controller="Mouvement" asp-action="Create" method="get" class="form-inline">
                 <button type="submit" class="btn btn-link nav-link">Ajouter une dépense</button>
             </form>
         </li>
@@ -74,7 +74,7 @@
             data.labels.push('@mouvement.Categorie');
             data.datasets[0].data.push('@mouvement.mouvement.montant');
             data.datasets[0].backgroundColor.push(generateRandomColor());
-    </text>
+        </text>
     }
 
 

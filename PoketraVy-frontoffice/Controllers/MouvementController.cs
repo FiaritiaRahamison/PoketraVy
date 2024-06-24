@@ -5,17 +5,20 @@ using PoketraVy_frontoffice.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace PoketraVy_frontoffice.Controllers
 {
     public class MouvementController : Controller
     {
         private readonly MouvementRepository _mouvementRepository;
+        private readonly BudgetRepository _budgetRepository;
 
-        public MouvementController(MouvementRepository mouvementRepository)
+        public MouvementController(MouvementRepository mouvementRepository,
+            BudgetRepository budgetRepository)
         {
             _mouvementRepository = mouvementRepository;
+            _budgetRepository = budgetRepository;
         }
 
         // GET: MouvementController
@@ -40,7 +43,22 @@ namespace PoketraVy_frontoffice.Controllers
         // GET: MouvementController/Create
         public ActionResult Create()
         {
-            return View();
+            int userId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            ViewBag.Categories = Enum.GetValues(typeof(Categorie)).Cast<Categorie>().ToList();
+            var budgetsValides = _budgetRepository.GetActiveBudgetsByIdUser(userId);
+            var categories = Enum.GetValues(typeof(Categorie)).Cast<Categorie>().ToList();
+
+            var viewModel = new MouvementCreationViewModel
+            {
+                ActiveBudgets = (List<Budget>)budgetsValides,
+
+                Categories = categories,
+                Mouvement = new Mouvement(),
+                IdBudget = null
+            };
+
+            return View(viewModel);
         }
 
         // POST: MouvementController/Create
