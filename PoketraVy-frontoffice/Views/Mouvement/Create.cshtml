@@ -16,6 +16,7 @@
             <input type="hidden" asp-for="Mouvement.IdCategorieUtilisateurBudget" class="form-control" readonly="readonly" />
             <label asp-for="categorie" class="control-label">Categorie</label>
             <select asp-for="categorie" class="form-control" id="categorySelect">
+                <option value="">--Selectionner--</option>
                 @foreach (var category in Model.Categories)
                 {
                 <option value="@category">@category</option>

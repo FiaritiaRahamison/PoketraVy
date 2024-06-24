@@ -46,7 +46,7 @@ namespace PoketraVy_frontoffice.Controllers
             if (ModelState.IsValid)
             {
                 _utilisateurBudgetRepository.Add(utilisateurBudget);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("UserDepenses", "Utilisateur");
             }
             return View(utilisateurBudget);
         }

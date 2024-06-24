@@ -78,8 +78,7 @@ namespace PoketraVy_frontoffice.Data
 
             return budgets;
         }
-
-        public Budget GetById(int id)
+            public Budget GetById(int id)
         {
             Budget budget = null;
 

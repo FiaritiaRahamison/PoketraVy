@@ -191,5 +191,26 @@ namespace PoketraVy_frontoffice.Data
 
             return utilisateurBudgets;
         }
+
+        public int GetUtilisateurBudgetId(int userId, int IdBudget)
+        {
+            var IdUtilisateurBudget = 0;
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT * FROM utilisateurbudget WHERE IdBudget = @IdBudget and IdUtilisateur = @userId", conn);
+                cmd.Parameters.AddWithValue("@IdBudget", IdBudget);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    IdUtilisateurBudget = (int)reader["ID"];
+                }
+            }
+
+            return IdUtilisateurBudget;
+        }
     }
 }

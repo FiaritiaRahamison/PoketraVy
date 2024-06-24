@@ -14,10 +14,13 @@ namespace PoketraVy_frontoffice.Controllers
     public class MouvementApiController : ControllerBase
     {
         private readonly CategorieUtilisateurBudgetRepository _categorieUtilisateurBudgetRepositoryRepository;
+        private readonly UtilisateurBudgetRepository _utilisateurBudgetRepositoryRepository;
 
-        public MouvementApiController(CategorieUtilisateurBudgetRepository categorieUtilisateurBudgetRepositoryRepository)
+        public MouvementApiController(CategorieUtilisateurBudgetRepository categorieUtilisateurBudgetRepositoryRepository,
+            UtilisateurBudgetRepository utilisateurBudgetRepositoryRepository)
         {
             _categorieUtilisateurBudgetRepositoryRepository = categorieUtilisateurBudgetRepositoryRepository;
+            _utilisateurBudgetRepositoryRepository = utilisateurBudgetRepositoryRepository;
         }
 
         [HttpGet("GetCategorieUtilisateurBudgetId")]
@@ -31,6 +34,19 @@ namespace PoketraVy_frontoffice.Controllers
                 return NotFound();
             }
             return Ok(idCategorieUtilisateurBudget);
+        }
+
+        [HttpGet("GetUtilisateurBudgetsId")]
+        public IActionResult GetUtilisateurBudgetsId(int IdBudget)
+        {
+            int userId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            int idUtilisateurBudget = _utilisateurBudgetRepositoryRepository.GetUtilisateurBudgetId(userId, IdBudget);
+            if (idUtilisateurBudget == 0)
+            {
+                return NotFound();
+            }
+            return Ok(idUtilisateurBudget);
         }
 
         [HttpGet("GetCategorieIdByName")]
