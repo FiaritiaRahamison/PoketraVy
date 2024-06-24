@@ -12,5 +12,6 @@ namespace PoketraVy_frontoffice.Models
         public Mouvement Mouvement { get; set; }
 
         public int? IdBudget { get; set; }
+        public Categorie categorie { get; set; }
     }
 }

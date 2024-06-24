@@ -79,7 +79,7 @@ namespace PoketraVy_frontoffice.Controllers
             {
                 ModelState.AddModelError(string.Empty, $"Unable to create record: {ex.Message}");
             }
-            return View(mouvement);
+            return RedirectToAction("UserDepenses", "Utilisateur");
         }
 
         // GET: MouvementController/Edit/5

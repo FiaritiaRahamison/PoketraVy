@@ -196,5 +196,39 @@ namespace PoketraVy_frontoffice.Data
 
             return categorieUtilisateurBudgets;
         }
+
+        public int GetByIdUtilisateurBudgetAndCategorie(int IdUtilisateur, int IdBudget, int Categorie)
+        {
+            int categorieUtilisateurBudgetId = 0;
+
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    var command = new SqlCommand("SELECT cub.ID FROM categorieutilisateurbudget as cub " +
+                        "inner join  utilisateurbudget ub on ub.ID = cub.IdUtilisateurBudget " +
+                        "inner join budget b on b.ID = @IdBudget " +
+                        "where ub.IdUtilisateur = @IdUtilisateur and cub.Categorie = @Categorie", connection);
+                    command.Parameters.AddWithValue("@IdUtilisateur", IdUtilisateur);
+                    command.Parameters.AddWithValue("@IdBudget", IdBudget);
+                    command.Parameters.AddWithValue("@Categorie", Categorie);
+                    connection.Open();
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            categorieUtilisateurBudgetId = (int)reader["ID"];
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"SQL Error: {ex.Message}");
+                throw;
+            }
+
+            return categorieUtilisateurBudgetId;
+        }
     }
 }
