@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PoketraVy_frontoffice.Data;
 
 namespace PoketraVy_frontoffice
 {
@@ -24,6 +25,11 @@ namespace PoketraVy_frontoffice
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSingleton(new UtilisateurRepository(Configuration.GetConnectionString("PoketraVy_backofficeContext")));
+            services.AddSingleton(new BudgetRepository(Configuration.GetConnectionString("PoketraVy_backofficeContext")));
+            services.AddSingleton(new UtilisateurBudgetRepository(Configuration.GetConnectionString("PoketraVy_backofficeContext")));
+            services.AddSingleton(new CategorieUtilisateurBudgetRepository(Configuration.GetConnectionString("PoketraVy_backofficeContext")));
+            services.AddSingleton(new MouvementRepository(Configuration.GetConnectionString("PoketraVy_backofficeContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
