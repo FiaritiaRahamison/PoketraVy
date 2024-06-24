@@ -68,11 +68,13 @@ namespace PoketraVy_backoffice.Pages
                     else
                     {
                         ModelState.AddModelError(string.Empty, "Nom d'utilisateur ou mot de passe incorrect.");
+                        return Page();
                     }
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Nom d'utilisateur incorrect.");
+                    return Page();
                 }
             }
 

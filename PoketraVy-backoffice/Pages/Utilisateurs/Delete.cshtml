@@ -4,10 +4,15 @@
 @{
     ViewData["Title"] = "Delete";
 }
+@if (!User.Identity.IsAuthenticated)
+{
+    <script>
+        window.location.href = '/Index';
+    </script>
+}
+<h1>Suppression</h1>
 
-<h1>Delete</h1>
-
-<h3>Are you sure you want to delete this?</h3>
+<h3>Etes vous sur?</h3>
 <div>
     <h4>Utilisateur</h4>
     <hr />

@@ -7,9 +7,9 @@ namespace PoketraVy_backoffice.services
 {
     public class UtilisateurService : IUtilisateurService
     {
-        private readonly IRepository<Utilisateur> _utilisateurRepository;
+        private readonly IUtilisateurRepository _utilisateurRepository;
 
-        public UtilisateurService(IRepository<Utilisateur> utilisateurRepository)
+        public UtilisateurService(IUtilisateurRepository utilisateurRepository)
         {
             _utilisateurRepository = utilisateurRepository;
         }
@@ -23,5 +23,16 @@ namespace PoketraVy_backoffice.services
         {
             return await _utilisateurRepository.GetAll();
         }
+
+        public async Task<int> GetUtilisateursCountAsync()
+        {
+            return await _utilisateurRepository.CountAsync();
+        }
+
+        public async Task<List<Utilisateur>> GetUtilisateursWithPaginationAsync(int pageNumber, int pageSize)
+        {
+            return await _utilisateurRepository.GetWithPaginationAsync(pageNumber, pageSize);
+        }
+
     }
 }

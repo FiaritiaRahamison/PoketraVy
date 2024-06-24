@@ -35,6 +35,7 @@ namespace PoketraVy_backoffice
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IBudgetRepository, BudgetRepository>();
+            services.AddScoped<IUtilisateurRepository, UtilisateurRepository>();
             services.AddScoped<IUtilisateurService, UtilisateurService>();
             services.AddScoped<IBudgetService, BudgetService>();
 

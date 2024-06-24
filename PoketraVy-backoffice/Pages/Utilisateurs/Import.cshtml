@@ -3,7 +3,12 @@
 @{
     ViewData["Title"] = "Import d'utilisateurs";
 }
-
+@if (!User.Identity.IsAuthenticated)
+{
+    <script>
+        window.location.href = '/Index';
+    </script>
+}
 <h2>Télécharger un fichier CSV/Excel</h2>
 
 <form method="post" enctype="multipart/form-data">
