@@ -71,7 +71,7 @@ namespace PoketraVy_frontoffice.Controllers
                 if (ModelState.IsValid)
                 {
                     _mouvementRepository.Add(mouvement);
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("UserDepenses", "Utilisateur");
                 }
                 return RedirectToAction(nameof(Index));
             }
