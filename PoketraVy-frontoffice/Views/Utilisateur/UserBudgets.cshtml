@@ -6,41 +6,108 @@
 
 <h2>User Budgets</h2>
 
+<canvas id="pieChart" width="50" height="500"></canvas>
+
 @if (Model.UtilisateurBudgets != null && Model.UtilisateurBudgets.Any())
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Budget ID</th>
-                <th>Montant</th>
-                <th>Remarque</th>
-                <th>Categorie Budgets</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var budget in Model.UtilisateurBudgets)
-            {
-                <tr>
-                    <td>@budget.IdBudget</td>
-                    <td>@budget.Montant</td>
-                    <td>@budget.Remarque</td>
-                    <td>
-                        <ul>
-                            @if (Model.CategorieUtilisateurBudgets.ContainsKey(budget.ID))
-                            {
-                                @foreach (var catBudget in Model.CategorieUtilisateurBudgets[budget.ID])
-                                {
-                                    <li>@catBudget.Categorie.Value - @catBudget.Montant</li>
-                                }
-                            }
-                        </ul>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Budget ID</th>
+            <th>Montant</th>
+            <th>Remarque</th>
+            <th>Categorie Budgets</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var budget in Model.UtilisateurBudgets)
+        {
+        <tr>
+            <td>@budget.IdBudget</td>
+            <td>@budget.Montant</td>
+            <td>@budget.Remarque</td>
+            <td>
+                <ul>
+                    @if (Model.CategorieUtilisateurBudgets.ContainsKey(budget.ID))
+                    {
+                    @foreach (var catBudget in Model.CategorieUtilisateurBudgets[budget.ID])
+                    {
+                    <li>@catBudget.Categorie.Value - @catBudget.Montant</li>
+                    }
+                    }
+                </ul>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
 }
 else
 {
-    <p>No budgets found.</p>
+<p>No budgets found.</p>
 }
+
+<button id="modifyButton" class="btn btn-primary">Modifier</button>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var ctx = document.getElementById('pieChart').getContext('2d');
+
+        var data = {
+            labels: [],
+            datasets: [{
+                data: [],
+                backgroundColor: []
+            }]
+        };
+
+        @foreach(var budget in Model.UtilisateurBudgets)
+    {
+        @if (Model.CategorieUtilisateurBudgets.ContainsKey(budget.ID)) {
+            @foreach(var catBudget in Model.CategorieUtilisateurBudgets[budget.ID])
+            {
+                <text>
+                    data.labels.push('@catBudget.Categorie.Value');
+                    data.datasets[0].data.push('@catBudget.Montant');
+                    data.datasets[0].backgroundColor.push(generateRandomColor());
+                    </text>
+            }
+        }
+    }
+
+    var pieChart = new Chart(ctx, {
+        type: 'pie',
+        data: data,
+        options: {
+            responsive: false,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw;
+                        }
+                    }
+                }
+            }
+        }
+    });
+    });
+
+    function generateRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    document.getElementById("modifyButton").onclick = function () {
+        window.location.href = '@Url.Action("Edit", "Account")';
+    };
+</script>
