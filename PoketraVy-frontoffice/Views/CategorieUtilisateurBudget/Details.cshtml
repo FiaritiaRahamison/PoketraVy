@@ -1,0 +1,54 @@
+﻿@model PoketraVy_frontoffice.Models.CategorieUtilisateurBudget
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>CategorieUtilisateurBudget</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdUtilisateurBudget)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdUtilisateurBudget)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Designation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Designation)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Categorie)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Categorie)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Montant)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Montant)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Daty)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Daty)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    <a asp-action="Index">Back to List</a>
+</div>

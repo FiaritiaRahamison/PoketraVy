@@ -28,6 +28,7 @@ namespace PoketraVy_frontoffice
             services.AddSingleton(new UtilisateurRepository(Configuration.GetConnectionString("PoketraVy_backofficeContext")));
             services.AddSingleton(new BudgetRepository(Configuration.GetConnectionString("PoketraVy_backofficeContext")));
             services.AddSingleton(new UtilisateurBudgetRepository(Configuration.GetConnectionString("PoketraVy_backofficeContext")));
+            services.AddSingleton(new CategorieUtilisateurBudgetRepository(Configuration.GetConnectionString("PoketraVy_backofficeContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
