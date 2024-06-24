@@ -1,4 +1,4 @@
-﻿@model PoketraVy_frontoffice.Models.Mouvement
+﻿@model PoketraVy_frontoffice.Models.MouvementCreationViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -10,27 +10,41 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="Mouvement.IdCategorieUtilisateurBudget" class="form-control" readonly="readonly" />
+            <label asp-for="categorie" class="control-label">Categorie</label>
+            <select asp-for="categorie" class="form-control" id="categorySelect">
+                @foreach (var category in Model.Categories)
+                {
+                <option value="@category">@category</option>
+                }
+            </select>
             <div class="form-group">
-                <label asp-for="IdCategorieUtilisateurBudget" class="control-label"></label>
-                <input asp-for="IdCategorieUtilisateurBudget" class="form-control" />
-                <span asp-validation-for="IdCategorieUtilisateurBudget" class="text-danger"></span>
+                <label asp-for="IdBudget" class="control-label"></label>
+                <select asp-for="IdBudget" class="form-control" id="budgetSelect">
+                    @foreach (var budget in Model.ActiveBudgets)
+                    {
+                    <option value="@budget.ID">@budget.Remarque</option>
+                    }
+                </select>
+                <span asp-validation-for="IdBudget" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Designation" class="control-label"></label>
-                <input asp-for="Designation" class="form-control" />
-                <span asp-validation-for="Designation" class="text-danger"></span>
+                <label asp-for="Mouvement.Designation" class="control-label"></label>
+                <input asp-for="Mouvement.Designation" class="form-control" />
+                <span asp-validation-for="Mouvement.Designation" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="montant" class="control-label"></label>
-                <input asp-for="montant" class="form-control" />
-                <span asp-validation-for="montant" class="text-danger"></span>
+                <label asp-for="Mouvement.montant" class="control-label"></label>
+                <input asp-for="Mouvement.montant" class="form-control" />
+                <span asp-validation-for="Mouvement.montant" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="daty" class="control-label"></label>
-                <input asp-for="daty" class="form-control" />
-                <span asp-validation-for="daty" class="text-danger"></span>
+                <label asp-for="Mouvement.daty" class="control-label"></label>
+                <input asp-for="Mouvement.daty" class="form-control" id="datyInput"/>
+                <span asp-validation-for="Mouvement.daty" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -44,5 +58,46 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+}
+
+<script>
+    $(document).ready(function () {
+        document.addEventListener("DOMContentLoaded", function () {
+            var datyInput = document.getElementById("datyInput");
+            var today = new Date().toISOString().slice(0, 10);
+            datyInput.value = today;
+        });
+
+        $('#categorySelect, #budgetSelect').change(function () {
+            var categoryName = $('#categorySelect').val();
+            var IdBudget = $('#budgetSelect').val();
+
+            console.log(categoryName, IdBudget);
+            if (categoryName && IdBudget) {
+                $.ajax({
+                    url: '/api/MouvementApi/GetCategorieIdByName',
+                    data: { name: categoryName },
+                    success: function (categoryId) {
+                        $.ajax({
+                            url: '/api/MouvementApi/GetCategorieUtilisateurBudgetId',
+                            data: { Categorie: categoryId, IdBudget: IdBudget },
+                            success: function (data) {
+                                console.log(data);
+                                $('#Mouvement_IdCategorieUtilisateurBudget').val(data);
+                            },
+                            error: function () {
+                                alert('Error retrieving data');
+                            }
+                        });
+                    },
+                    error: function () {
+                        alert('Error retrieving category ID');
+                    }
+                });
+            }
+        });
+    });
+</script>
 }

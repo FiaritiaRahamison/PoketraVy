@@ -44,6 +44,41 @@ namespace PoketraVy_frontoffice.Data
             return budgets;
         }
 
+        public IEnumerable<Budget> GetActiveBudgetsByIdUser(int IdUser)
+        {
+            var budgets = new List<Budget>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var command = new SqlCommand("SELECT b.* FROM budget b " +
+                    "WHERE b.DatyFinPrevisionnel >= GETDATE() " +
+                    "AND EXISTS( " +
+                    "SELECT * " +
+                    "FROM utilisateurbudget ub JOIN budget b1 on b1.ID = ub.IdBudget " +
+                    "WHERE ub.IdUtilisateur = @IdUser AND b1.ID = ub.IdBudget" +
+                    ")", connection);
+                command.Parameters.AddWithValue("@IdUser", IdUser);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        budgets.Add(new Budget
+                        {
+                            ID = (int)reader["ID"],
+                            Montant = (double)reader["Montant"],
+                            Daty = (DateTime)reader["Daty"],
+                            DatyFinPrevisionnel = (DateTime)reader["DatyFinPrevisionnel"],
+                            Etat = (bool)reader["Etat"],
+                            Remarque = reader["Remarque"].ToString()
+                        });
+                    }
+                }
+            }
+
+            return budgets;
+        }
+
         public Budget GetById(int id)
         {
             Budget budget = null;

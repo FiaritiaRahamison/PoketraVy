@@ -66,6 +66,10 @@ namespace PoketraVy_frontoffice
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Authentication}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                   name: "api",
+                   pattern: "api/{controller}/{action}/{id?}");
             });
         }
     }

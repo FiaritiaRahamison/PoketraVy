@@ -5,6 +5,7 @@ using PoketraVy_frontoffice.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace PoketraVy_frontoffice.Controllers
@@ -13,10 +14,19 @@ namespace PoketraVy_frontoffice.Controllers
     {
 
         private readonly UtilisateurRepository _utilisateurRepository;
+        private readonly UtilisateurBudgetRepository _utilisateurBudgetRepository;
+        private readonly CategorieUtilisateurBudgetRepository _categorieUtilisateurBudgetRepository;
+        private readonly MouvementRepository _mouvementRepository;
 
-        public UtilisateurController(UtilisateurRepository utilisateurRepository)
+        public UtilisateurController(UtilisateurRepository utilisateurRepository,
+            UtilisateurBudgetRepository utilisateurBudgetRepository,
+            CategorieUtilisateurBudgetRepository categorieUtilisateurBudgetRepository,
+            MouvementRepository mouvementRepository)
         {
             _utilisateurRepository = utilisateurRepository;
+            _utilisateurBudgetRepository = utilisateurBudgetRepository;
+            _categorieUtilisateurBudgetRepository = categorieUtilisateurBudgetRepository;
+            _mouvementRepository = mouvementRepository;
         }
 
         // GET: UtilisateurController
@@ -118,6 +128,74 @@ namespace PoketraVy_frontoffice.Controllers
             {
                 return View();
             }
+        }
+
+        public IActionResult UserBudgets()
+        {
+            int userId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            var utilisateurBudgets = _utilisateurBudgetRepository.GetUtilisateurBudgetsByUserId(userId);
+            var categorieUtilisateurBudgets = new Dictionary<int, List<CategorieUtilisateurBudget>>();
+            var depensesListe = _mouvementRepository.GetByIdUser(userId);
+
+            var depenses = 0.0;
+
+
+
+            foreach (var budget in utilisateurBudgets)
+            {
+                var categories = _categorieUtilisateurBudgetRepository.GetCategorieUtilisateurBudgetsByUtilisateurBudgetId(budget.ID);
+                categorieUtilisateurBudgets[budget.ID] = categories.ToList();
+            }
+
+            foreach (var depense in depensesListe)
+            {
+                depenses += depense.mouvement.montant;
+            }
+
+            var viewModel = new UserBudgetsViewModel
+            {
+                UtilisateurBudgets = utilisateurBudgets.ToList(),
+                CategorieUtilisateurBudgets = categorieUtilisateurBudgets,
+                depenses = depenses
+            };
+
+            return View(viewModel);
+        }
+
+        public IActionResult UserDepenses()
+        {
+            int userId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            var utilisateurBudgets = _utilisateurBudgetRepository.GetUtilisateurBudgetsByUserId(userId);
+            var categorieUtilisateurBudgets = new Dictionary<int, List<CategorieUtilisateurBudget>>();
+            var depensesListe = _mouvementRepository.GetByIdUser(userId);
+
+            var depenses = 0.0;
+
+
+
+            foreach (var budget in utilisateurBudgets)
+            {
+                var categories = _categorieUtilisateurBudgetRepository.GetCategorieUtilisateurBudgetsByUtilisateurBudgetId(budget.ID);
+                categorieUtilisateurBudgets[budget.ID] = categories.ToList();
+            }
+
+            foreach (var depense in depensesListe)
+            {
+                depenses += depense.mouvement.montant;
+            }
+
+            var viewModel = new UserDepensesViewModel
+            {
+                UtilisateurBudgets = utilisateurBudgets.ToList(),
+                CategorieUtilisateurBudgets = categorieUtilisateurBudgets,
+                Mouvements = (List<MouvementDetails>)depensesListe,
+                depenses = depenses
+            };
+            viewModel.totalMontant = utilisateurBudgets.ToList().Sum(b => b.Montant);
+
+            return View(viewModel);
         }
     }
 }
