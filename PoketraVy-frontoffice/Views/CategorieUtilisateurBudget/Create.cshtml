@@ -1,4 +1,4 @@
-﻿@model PoketraVy_frontoffice.Models.CategorieUtilisateurBudget
+﻿@model PoketraVy_frontoffice.Models.CategorieUtilisateurBudgetCreationViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -12,11 +12,20 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="IdUtilisateurBudget" class="form-control" readonly="readonly" />
             <div class="form-group">
-                <label asp-for="IdUtilisateurBudget" class="control-label"></label>
-                <input asp-for="IdUtilisateurBudget" class="form-control" />
+                <label class="control-label">Budget</label>
+                <select class="form-control" id="budgetSelect">
+                    <option value="">--Selectionner--</option>
+                    @foreach (var budget in Model.ActiveBudgets)
+                    {
+                        <option value="@budget.ID">@budget.Remarque</option>
+                    }
+                </select>
                 <span asp-validation-for="IdUtilisateurBudget" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Designation" class="control-label"></label>
                 <input asp-for="Designation" class="form-control" />
@@ -24,7 +33,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Categorie" class="control-label"></label>
-                <input asp-for="Categorie" class="form-control" />
+                <select asp-for="Categorie" class="form-control">
+                    @foreach (var categorie in Enum.GetValues(typeof(Categorie)))
+                    {
+                        <option value="@((int)categorie)">@categorie</option>
+                    }
+                </select>
                 <span asp-validation-for="Categorie" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -51,3 +65,37 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script>
+    $(document).ready(function () {
+        $('#categorySelect, #budgetSelect').change(function () {
+            var IdBudget = $('#budgetSelect').val();
+
+            console.log(IdBudget);
+            if (IdBudget) {
+                $.ajax({
+                    url: '/api/MouvementApi/GetCategorieIdByName',
+                    data: { name: categoryName },
+                    success: function (categoryId) {
+                        $.ajax({
+                            url: '/api/MouvementApi/GetUtilisateurBudgetsId',
+                            data: { IdBudget: IdBudget },
+                            success: function (data) {
+                                console.log(data);
+                                $('#Mouvement_IdUtilisateurBudget').val(data);
+                            },
+                            error: function () {
+                                alert('Error retrieving data');
+                            }
+                        });
+                    },
+                    error: function () {
+                        alert('Error retrieving category ID');
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+

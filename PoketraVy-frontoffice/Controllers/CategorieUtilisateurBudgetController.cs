@@ -2,16 +2,21 @@
 using PoketraVy_frontoffice.Data;
 using PoketraVy_frontoffice.Models;
 using System.Collections.Generic;
+using System.Security.Claims;
+using System;
 
 namespace PoketraVy_frontoffice.Controllers
 {
     public class CategorieUtilisateurBudgetController : Controller
     {
         private readonly CategorieUtilisateurBudgetRepository _categorieUtilisateurBudgetRepository;
+        private readonly BudgetRepository _budgetRepository;
 
-        public CategorieUtilisateurBudgetController(CategorieUtilisateurBudgetRepository categorieUtilisateurBudgetRepository)
+        public CategorieUtilisateurBudgetController(CategorieUtilisateurBudgetRepository categorieUtilisateurBudgetRepository,
+            BudgetRepository budgetRepository)
         {
             _categorieUtilisateurBudgetRepository = categorieUtilisateurBudgetRepository;
+            _budgetRepository = budgetRepository;
         }
 
         // GET: CategorieUtilisateurBudget
@@ -35,7 +40,15 @@ namespace PoketraVy_frontoffice.Controllers
         // GET: CategorieUtilisateurBudget/Create
         public IActionResult Create()
         {
-            return View();
+            int userId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var activeBudgets = _budgetRepository.GetActiveBudgetsByIdUser(userId);
+
+            var viewModel = new CategorieUtilisateurBudgetCreationViewModel
+            {
+                ActiveBudgets = (List<Budget>)activeBudgets
+            };
+
+            return View(viewModel);
         }
 
         // POST: CategorieUtilisateurBudget/Create
