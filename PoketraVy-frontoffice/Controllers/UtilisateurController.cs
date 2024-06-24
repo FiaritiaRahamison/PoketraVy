@@ -150,7 +150,7 @@ namespace PoketraVy_frontoffice.Controllers
 
             foreach (var depense in depensesListe)
             {
-                depenses += depense.montant;
+                depenses += depense.mouvement.montant;
             }
 
             var viewModel = new UserBudgetsViewModel
@@ -159,6 +159,41 @@ namespace PoketraVy_frontoffice.Controllers
                 CategorieUtilisateurBudgets = categorieUtilisateurBudgets,
                 depenses = depenses
             };
+
+            return View(viewModel);
+        }
+
+        public IActionResult UserDepenses()
+        {
+            int userId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            var utilisateurBudgets = _utilisateurBudgetRepository.GetUtilisateurBudgetsByUserId(userId);
+            var categorieUtilisateurBudgets = new Dictionary<int, List<CategorieUtilisateurBudget>>();
+            var depensesListe = _mouvementRepository.GetByIdUser(userId);
+
+            var depenses = 0.0;
+
+
+
+            foreach (var budget in utilisateurBudgets)
+            {
+                var categories = _categorieUtilisateurBudgetRepository.GetCategorieUtilisateurBudgetsByUtilisateurBudgetId(budget.ID);
+                categorieUtilisateurBudgets[budget.ID] = categories.ToList();
+            }
+
+            foreach (var depense in depensesListe)
+            {
+                depenses += depense.mouvement.montant;
+            }
+
+            var viewModel = new UserDepensesViewModel
+            {
+                UtilisateurBudgets = utilisateurBudgets.ToList(),
+                CategorieUtilisateurBudgets = categorieUtilisateurBudgets,
+                Mouvements = (List<MouvementDetails>)depensesListe,
+                depenses = depenses
+            };
+            viewModel.totalMontant = utilisateurBudgets.ToList().Sum(b => b.Montant);
 
             return View(viewModel);
         }

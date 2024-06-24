@@ -167,13 +167,13 @@ namespace PoketraVy_frontoffice.Data
         }
 
         // Méthode pour obtenir les CategorieUtilisateurBudget par UtilisateurBudget ID
-        public IEnumerable<Mouvement> GetByIdUser(int IdUser)
+        public IEnumerable<MouvementDetails> GetByIdUser(int IdUser)
         {
-            var mouvements = new List<Mouvement>();
+            var mouvementDetails = new List<MouvementDetails>();
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                String query = @"select m.* from mouvement m  join categorieutilisateurbudget  cub 
+                String query = @"select ub.ID as IdUtilisateurBudget, cub.categorie ,m.* from mouvement m join categorieutilisateurbudget  cub 
                       on m.IdCategorieUtilisateurBudget = cub.ID
                       join utilisateurbudget ub on ub.ID = cub.IdUtilisateurBudget
                       where ub.IdUtilisateur = @IdUser";
@@ -185,18 +185,25 @@ namespace PoketraVy_frontoffice.Data
 
                 while (reader.Read())
                 {
-                    mouvements.Add(new Mouvement
+                    var mouvement = new Mouvement
                     {
                         ID = (int)reader["ID"],
                         IdCategorieUtilisateurBudget = (int)reader["IdCategorieUtilisateurBudget"],
                         Designation = reader["Designation"].ToString(),
-                        montant = (double)reader["montant"],
-                        daty = (DateTime)reader["daty"]
+                        montant = (double)reader["Montant"],
+                        daty = (DateTime)reader["Daty"]
+                    };
+
+                    mouvementDetails.Add(new MouvementDetails
+                    {
+                        mouvement = mouvement,
+                        IdUtilisateurBudget = (int)reader["IdUtilisateurBudget"],
+                        Categorie = (Categorie)reader["Categorie"]
                     });
                 }
             }
 
-            return mouvements;
+            return mouvementDetails;
         }
     }
 }
