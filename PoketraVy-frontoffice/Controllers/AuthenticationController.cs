@@ -24,13 +24,13 @@ namespace PoketraVy_frontoffice.Controllers
             return RedirectToAction("Login", "Authentication");
         }
 
-        // GET: Account/Login
+        // GET: Authentication/Login
         public IActionResult Login()
         {
             return View();
         }
 
-        // POST: Account/Login
+        // POST: Authentication/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel user)
@@ -52,7 +52,7 @@ namespace PoketraVy_frontoffice.Controllers
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "CategorieUtilisateurBudget");
                 }
                 else
                 {
@@ -62,11 +62,38 @@ namespace PoketraVy_frontoffice.Controllers
             return View();
         }
 
-        // GET: Account/Logout
+        // GET: Authentication/ChangePassword
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        // POST: Authentication/ChangePassword
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ChangePassword(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var utilisateur = _utilisateurRepository.GetByUsername(model.Username);
+
+                if (utilisateur != null && model.NewPassword == model.ConfirmPassword)
+                {
+                    utilisateur.Password = model.NewPassword;
+                    _utilisateurRepository.Update(utilisateur);
+                    return RedirectToAction("Login");
+                }
+                ModelState.AddModelError("", "Confirm password.");
+            }
+            return View(model);
+        }
+
+        // GET: Authentication/Logout
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Authentication");
         }
+
     }
 }
