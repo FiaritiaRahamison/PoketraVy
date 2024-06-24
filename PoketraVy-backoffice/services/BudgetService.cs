@@ -46,6 +46,8 @@ namespace PoketraVy_backoffice.services
                 {
                     utilisateurBudget.IdBudget = createdBudget.ID;
                     utilisateurBudget.Budget = createdBudget;
+                    utilisateurBudget.Utilisateur = await _utilisateurService.GetUtilisateur(utilisateurBudget.Utilisateur.ID);
+                    utilisateurBudget.IdUtilisateur = utilisateurBudget.Utilisateur.ID;
                     await _utilisateurBudgetRepository.Create(utilisateurBudget);
                 }
 
