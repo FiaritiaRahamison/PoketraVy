@@ -4,7 +4,7 @@
     ViewData["Title"] = "User Budgets";
 }
 
-<h2>User Budgets</h2>
+<h2>Budget De l'Utilisateur</h2>
 
 <div class="row" style="justify-content: center;">
     <div class="col-md-4">
@@ -22,7 +22,7 @@
                             totalMontant += @budget.Montant;
                         }
                     }
-                    <h5><b>@totalMontant</b></h5>
+                    <h5><b>@totalMontant?.ToString("C")</b></h5>
                 </div>
             </div>
          }
@@ -37,16 +37,13 @@
                 Dépenses
             </div>
             <div class="card-body">
-                <h4><b>@Model.depenses</b></h4>
+                <h4><b>@Model.depenses.ToString("C")</b></h4>
             </div>
         </div>
         
     </div>
 </div>
-
-<div ></div>
-<canvas id="pieChart" width="400" height="400"></canvas>
-<button id="modifyButton" class="btn btn-primary">Modifier</button>
+<canvas id="pieChart" width="400" height="400" class="mx-auto my-0"></canvas>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
