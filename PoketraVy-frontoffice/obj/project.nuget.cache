@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "w8asGrBDDE+8N8t2++yQviI49PIFEIYzSf2Yb96Rb0bUNu+dLusGHdGaGen0e5JsVnIpMOT8X0ncuylkFunluQ==",
+  "dgSpecHash": "vXnDd5ELm8sFg10yFjcVZ7FiJ2TiB57fdQp8suLeMRvVXmtWQbstcwqqxDiNCjQg9rozV1aQAE4hRIPY70Wefg==",
   "success": true,
   "projectFilePath": "D:\\IT-U\\Master\\M2\\C#.NET Core\\PoketraVy\\PoketraVy-frontoffice\\PoketraVy-frontoffice.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\raham\\.nuget\\packages\\chart.js\\3.7.1\\chart.js.3.7.1.nupkg.sha512",
     "C:\\Users\\raham\\.nuget\\packages\\humanizer.core\\2.2.0\\humanizer.core.2.2.0.nupkg.sha512",
     "C:\\Users\\raham\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\raham\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",

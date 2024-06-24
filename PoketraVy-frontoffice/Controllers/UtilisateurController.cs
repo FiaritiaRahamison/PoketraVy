@@ -13,10 +13,14 @@ namespace PoketraVy_frontoffice.Controllers
     {
 
         private readonly UtilisateurRepository _utilisateurRepository;
+        private readonly UtilisateurBudgetRepository _utilisateurBudgetRepository;
+        private readonly CategorieUtilisateurBudgetRepository _categorieUtilisateurBudgetRepository;
 
-        public UtilisateurController(UtilisateurRepository utilisateurRepository)
+        public UtilisateurController(UtilisateurRepository utilisateurRepository, UtilisateurBudgetRepository utilisateurBudgetRepository, CategorieUtilisateurBudgetRepository categorieUtilisateurBudgetRepository)
         {
             _utilisateurRepository = utilisateurRepository;
+            _utilisateurBudgetRepository = utilisateurBudgetRepository;
+            _categorieUtilisateurBudgetRepository = categorieUtilisateurBudgetRepository;
         }
 
         // GET: UtilisateurController
@@ -118,6 +122,29 @@ namespace PoketraVy_frontoffice.Controllers
             {
                 return View();
             }
+        }
+
+        public IActionResult UserBudgets()
+        {
+            // Remplacer par l'ID utilisateur connecté
+            int userId = 1;
+
+            var utilisateurBudgets = _utilisateurBudgetRepository.GetUtilisateurBudgetsByUserId(userId);
+            var categorieUtilisateurBudgets = new Dictionary<int, List<CategorieUtilisateurBudget>>();
+
+            foreach (var budget in utilisateurBudgets)
+            {
+                var categories = _categorieUtilisateurBudgetRepository.GetCategorieUtilisateurBudgetsByUtilisateurBudgetId(budget.ID);
+                categorieUtilisateurBudgets[budget.ID] = categories.ToList();
+            }
+
+            var viewModel = new UserBudgetsViewModel
+            {
+                UtilisateurBudgets = utilisateurBudgets.ToList(),
+                CategorieUtilisateurBudgets = categorieUtilisateurBudgets
+            };
+
+            return View(viewModel);
         }
     }
 }

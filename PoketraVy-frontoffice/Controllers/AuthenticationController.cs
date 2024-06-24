@@ -52,7 +52,7 @@ namespace PoketraVy_frontoffice.Controllers
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
-                    return RedirectToAction("Index", "CategorieUtilisateurBudget");
+                    return RedirectToAction("UserBudgets", "Utilisateur");
                 }
                 else
                 {

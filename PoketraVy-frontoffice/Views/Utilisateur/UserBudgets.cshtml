@@ -1,0 +1,46 @@
+﻿@model PoketraVy_frontoffice.Models.UserBudgetsViewModel
+
+@{
+    ViewData["Title"] = "User Budgets";
+}
+
+<h2>User Budgets</h2>
+
+@if (Model.UtilisateurBudgets != null && Model.UtilisateurBudgets.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Budget ID</th>
+                <th>Montant</th>
+                <th>Remarque</th>
+                <th>Categorie Budgets</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var budget in Model.UtilisateurBudgets)
+            {
+                <tr>
+                    <td>@budget.IdBudget</td>
+                    <td>@budget.Montant</td>
+                    <td>@budget.Remarque</td>
+                    <td>
+                        <ul>
+                            @if (Model.CategorieUtilisateurBudgets.ContainsKey(budget.ID))
+                            {
+                                @foreach (var catBudget in Model.CategorieUtilisateurBudgets[budget.ID])
+                                {
+                                    <li>@catBudget.Categorie.Value - @catBudget.Montant</li>
+                                }
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No budgets found.</p>
+}
