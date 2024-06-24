@@ -14,6 +14,6 @@ namespace PoketraVy_frontoffice.Models
         public bool Etat { get; set; }
         public string Remarque { get; set; }
 
-        //public ICollection<UtilisateurBudget> UtilisateurBudget { get; set; }
+        public ICollection<UtilisateurBudget> UtilisateurBudget { get; set; }
     }
 }
